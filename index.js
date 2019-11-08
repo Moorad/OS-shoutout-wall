@@ -7,5 +7,6 @@ app.listen(process.env.PORT || 4000, () => {
 });
 
 app.get('/', (req,res) => {
-	console.log(req);
+	// console.log(req);
+	console.log(req.headers['nightbot-channel']);
 })
