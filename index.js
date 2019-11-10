@@ -11,15 +11,34 @@ app.listen(process.env.PORT || 4000, () => {
 });
 
 app.get('/push_user', (req,res) => {
-	console.log(req.query.uid);
+	let userId = req.query.uid
 	// req.headers['nightbot-channel']
 	// let nightbotId = 'req.query.nId';
-	let userId = getQueryVariable(req.headers['nightbot-channel'],'name');
-	res.json({Hello:'Hello'});
+	let hostId = getQueryVariable(req.headers['nightbot-channel'],'name');
+	for (var i = 0;i < fetchedUsers.length;i++) {
+		if (fetchedUsers[i].hostId == hostId) {
+			fetchedUsers[i].users.push(userId);
+			console.log(fetchedUsers)
+			res.send('');
+			return;
+		}
+	}
+	fetchedUsers.push({hostId:hostId,users:[userId]});
+	console.log(fetchedUsers);
+	res.send('');
 });
 
 app.get('/get_users', (req,res) => {
-	let nightbotId = req.query.nId;
+	let hostId = req.query.hostId;
+	for (var i = 0;i < fetchedUsers.length;i++) {
+		if (fetchedUsers[i].hostId == hostId) {
+			fetchedUsers.splice(i,1);
+			res.json(fetchedUsers[i]);
+			console.log(fetchedUsers[i]);
+			console.log(fetchedUsers);
+			return;
+		}
+	}
 });
 
 function getQueryVariable(query,variable) {

@@ -1,0 +1,71 @@
+html, body {
+	background-position: center !important;
+	background-size: cover !important;
+}
+
+.list-group {
+	width: 60%;
+	height: 10%;
+	margin-right: 0 !important;
+}
+
+.list-group li {
+	padding: 0 !important;
+	text-align: left !important;
+	background-color: transparent !important;
+	border: 0;
+}
+
+.list-group .channelName {
+	font-size: 15px;
+	font-family: Roboto, sans-serif;
+	font-weight: normal;
+	font-weight: 500 !important;
+	text-align: left !important;
+	color: black !important;
+	padding: 0;
+	margin: 0;
+	margin-top: 10px;
+}
+
+.list-group .subscriberCount {
+	font-size: 40px;
+	padding: 10 10px;
+	font-family: Roboto, sans-serif;
+	font-weight: 800;
+	text-align: left !important;
+	width: 100% !important;
+}
+
+.container {
+	height: 100%;
+	margin:0;
+padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  grid-column-gap: 50px;
+  grid-gap: 10px;
+  width:100vw;
+}
+.grid-item {
+	height:100px;
+ 	padding: 5px;
+  	font-size: 20px;
+  	background-color: rgba(255,255,255,0.5) 
+}
+
+img {
+	height:100%;
+	display: inline-block;
+}
+
+.wrapper {
+	vertical-align: middle;
+	width:calc(100% - 112px);
+	display: inline-block;
+	padding-left: 5px;
+}
