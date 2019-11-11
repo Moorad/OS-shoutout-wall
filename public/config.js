@@ -1,18 +1,13 @@
+
 var config = {
-
-	// Update the below keys as required
-	'nightbotToken' : 'XXX', // Add your !quote token from nightbot custom quote API here
-	'googleApiKeys' : ['XXX'], // Add your google API key/s here
-	'nightbotPrefix' : /!XXX/gi, // Change zzz to align with whatever prefix you've set in your !wall command
-
-	// Add channelID to use google API for Live Chat rather than Nightbot
-	'channelID' : 'XXX', // Enter your youtube channelID here
-
-	// Customise the size of your wall here
-	'numberOfChannels' :40, //
+	// Customise the your wall here
+	'numberOfChannels' :45, //
 	'numberOfColumns' : 5,// The number of columns 
-	'backgroundURL' : 'https://st3.depositphotos.com/2791631/15321/v/600/depositphotos_153211296-stock-video-blur-background-light-bokeh-of.jpg'
+	'backgroundURL' : 'https://images.wallpaperscraft.com/image/bird_silhouette_vector_134154_1920x1080.jpg',
 	// Paste an image url like 'https://www.w3schools.com/images/w3schools_green.jpg' 
-	// or you can put image files in the image folder and set backgroundURL to './images/nameOfFile.png'
+	// or you can put an image file in the image folder and set backgroundURL to './images/nameOfFile.png'
 	// you can leave blank for a white background
+
+	'googleAPIKey' : 'AIzaSyClsar_ZmkrZ5Rev-r3JEWnLwF-Fi8VyBo', // Add your Google API key here
+	'channelId' : 'UCA8FloqKERn-PgMVGaFJO5w' // Add your channelId here
 };	
