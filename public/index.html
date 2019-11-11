@@ -2,126 +2,29 @@
 <html lang="en">
 
 <head>
-	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
+	<!-- Bootstrap, CSS and Google Fonts -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-	<!-- Odometer CSS -->
-	<link rel="stylesheet" href="http://github.hubspot.com/odometer/themes/odometer-theme-default.css" />
-
-	<!-- Font Awesome CSS -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-	<!-- Google Fonts CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,600,300" rel="stylesheet">
-	<!-- Load config -->
-	<script src="config.js"></script>
-
-	<!-- Internal CSS -->
 	<link rel="stylesheet" href="main.css">
 
-	<title>Subscriber Count</title>
+	<title>Shoutout Wall</title>
+
+	<script src="config.js"></script>
 </head>
 
 <body>
-
+	<!-- Main container -->
 	<div class="container">
 		<div class="grid-container">
-			<!-- <div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			<div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class='wrapper'><div>name</div><div>subs</div></div></div>
-			 -->
 		  </div>
 	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+	<!-- main JavaScript File -->
 	<script type="text/javascript" src='main.js'></script>
-
-	<!-- <script>
-		var corsAnywhereClient = "https://cryptic-everglades-51644.herokuapp.com/";
-		var channelListURL = corsAnywhereClient + "https://twitch.center/customapi/quote/list?token=" + CONFIG.nightbotToken +
-			"&no_id=1";
-		var socket = io.connect('https://shoutout-yifzjoyyxk.now.sh');
-		function fn60sec() {
-			var googleApiCallURL = "";
-			var channelList = [];
-			var channelListDedup = [];
-			var channelListSelected = "";
-			var channelID = ""; // 
-			var channelName = [];
-			var channelImage = [];
-			var subscriberCount = [];
-			var numberOfChannelsRounded = Math.floor(CONFIG.numberOfChannels / CONFIG.numberOfRows) * CONFIG.numberOfRows;
-			var ytJSON = [];
-			$.get(channelListURL, function (result) {
-				console.log(result);
-				channelList = result.replace(CONFIG.nightbotPrefix, '').split("\n").reverse();
-				channelListDedup = Array.from(new Set(channelList));
-				channelListSelected = channelListDedup.slice(0, Math.min(numberOfChannelsRounded, channelListDedup.length))
-					.join("%2C");
-				googleApiCallURL = "https://www.googleapis.com/youtube/v3/channels?part=snippet%2Cstatistics&id=" +
-					channelListSelected + "&key=" + CONFIG.googleApiKeys[Math.floor(Math.random() * Math.floor(CONFIG
-						.googleApiKeys.length))];
-				$.getJSON(googleApiCallURL, function (result) {
-					console.log(result);
-					ytJSON = result;
-					var iteration = 0;
-					while (iteration <= Math.min(numberOfChannelsRounded - 1, result.items.length - 1)) {
-						var channelNumber = channelListDedup.indexOf(result.items[iteration].id) + 1;
-						channelName[iteration] = result.items[iteration].snippet.title;
-						subscriberCount[iteration] = result.items[iteration].statistics.subscriberCount;
-						channelImage[iteration] = result.items[iteration].snippet.thumbnails.medium.url;
-						$(".channel_" + channelNumber + " .channelName").html('<i class="fab fa-youtube"></i> ' + channelName[
-							iteration]);
-						$('.channel_' + channelNumber + ' .subscriberCount').html(subscriberCount[iteration]);
-						$('.channel_' + channelNumber + ' .channelImage').attr('src', channelImage[iteration]);
-						console.log(iteration + " " + channelName[iteration] + " " + channelNumber);
-						iteration++;
-					};
-				});
-			});
-		};
-		fn60sec();
-		setInterval(fn60sec, 1 * 60 * 1000);
-		
-		socket.on('script', (data) => {
-			console.log(data);	
-			var script = document.getElementById('script');
-			script.innerHTML = data.script
-		})
-		/*  To set up your own CORS anywhere server set up a heroku account and commit the following code to it
-			git clone https://github.com/Rob--W/cors-anywhere.git
-			cd cors-anywhere/
-			npm install
-			heroku create
-			git push heroku master
-		*/
-		/*  Use Youtube API to read chat logs
-		
-			Get Video ID from Channel ID
-			https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=[channelId]&eventType=live&type=video&key=[key]
-			Get LivechatID
-			https://www.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=[video ID]&key=[key]
-			Get Live Chat Data
-			https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId={liveChatId}&part=id%2C+snippet%2C+authorDetails&key={YOUR_API_KEY}
-			
-		*/
-	</script> -->
-	
-	<script id="script"></script>
-
 </body>
 
 </html>

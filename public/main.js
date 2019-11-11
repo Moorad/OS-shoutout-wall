@@ -1,27 +1,59 @@
-// var iterationRow = 1;
-// while (iterationRow <= CONFIG.numberOfRows) {
-// 	var htmlRow = '<div class="row row_' + iterationRow +
-// 		'"> <div class="col-l"> <div class="card-group border-0"> </div> </div> </div>';
-// 	$(".container").append(htmlRow);
-// 	var iterationCard = 1;
-// 	while (iterationCard <= CONFIG.numberOfChannels / CONFIG.numberOfRows) {
-// 		var channelNumberObject = Math.floor(iterationCard + ((iterationRow - 1) * CONFIG.numberOfChannels / CONFIG
-// 			.numberOfRows));
-// 		var htmlSubscriberCard = "<div class='channel_" + channelNumberObject +
-// 			" card'> <img class='channelImage card-img-top img-fluid rounded-top' src='https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no'/> <ul class='list-group list-group-flush'> <li class='list-group-item bg-danger'> <h5 class='channelName card-title text-center text-#ffffff text-truncate'>!wall</h5> </li> <li class='list-group-item text-center'>	<h2 class='subscriberCount card-title text-center odometer'>0</h2> </li> </ul> </div>";
-// 		$(".row_" + iterationRow + " .col-l .card-group").append(htmlSubscriberCard);
-// 		iterationCard++;
-// 	}
-// 	iterationRow++;
-// }
-
+/*global config*/
 let gridContainer = document.getElementsByClassName('grid-container')[0];
+let serverURL = 'http://localhost:4000/get_users';
+let usersArray = [];
 
 gridContainer.style.gridTemplateColumns = 'auto '.repeat(config.numberOfColumns);
 document.body.style.background = `url(${config.backgroundURL})`;
 
 for (var i =0; i < config.numberOfChannels;i++) {
-	gridContainer.innerHTML += ' <div class="grid-item"><img src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class="wrapper"><div class="channel-name">!wall</div><div class="channel-subscriber-count">0</div></div></div>'
+	gridContainer.innerHTML += ' <div class="grid-item"><img class="profile-picture" src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class="wrapper"><div class="channel-name">!wall</div><div class="channel-subscriber-count">0</div></div></div>';
 }
 
-setInterval(() => {console.log('sent')},30000)
+getUsers(() => {
+	updateUser();
+});
+setInterval(() => {
+	getUsers(() => {
+		updateUser();
+	});
+	
+},10000);
+
+function getUsers(callback) {
+	fetch(`${serverURL}?hostId=${config.channelId}`,{
+		method:'GET'
+	}).then(res => res.json())
+	.then(json => {
+		console.log(json);
+		if (json.users.length == 0) {
+			console.log('No one used the command yet');
+		} else {
+			for (var i = 0;i < json.users.length;i++) {
+				console.log(usersArray.indexOf(json.users[i]) == -1);
+				if (usersArray.indexOf(json.users[i]) == -1) {
+					usersArray[usersArray.length % config.numberOfChannels] = json.users[i];
+				}
+			}
+		}
+		callback();
+	});
+}
+
+function updateUser() {
+	for (var i = 0;i < usersArray.length;i++) {
+		let wrapper = gridContainer.children[i].children[1];
+		
+		fetch(`https://www.googleapis.com/youtube/v3/channels?id=${usersArray[i]}&key=${config.googleAPIKey}&part=snippet,statistics`,{
+			method: 'GET'
+		}).then(res => res.json()).then(json => {
+				console.log(json);
+				wrapper.getElementsByClassName('channel-name')[0].innerHTML = json.items[0].snippet.title;
+				wrapper.getElementsByClassName('channel-subscriber-count')[0].innerHTML = json.items[0].statistics.subscriberCount;
+				wrapper.parentElement.getElementsByClassName('profile-picture')[0].src = json.items[0].snippet.thumbnails.default.url;
+			});
+	}
+}
+
+// https://yt3.ggpht.com/a-/AAuE7mDQ1-4gPIEKqpGr6Uw_ZJFgRQ8gCEi5IknhQEaU=s288-c-k-c0xffffffff-no-rj-mo
+// https://yt3.ggpht.com/a-/AAuE7mC48eLNNt9M65fqy_g44-Ws78zK0LJ6YjL_QhBpnA=s288-c-k-c0xffffffff-no-rj-mo
