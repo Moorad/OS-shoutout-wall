@@ -20,9 +20,13 @@ setInterval(() => {
 		updateUser();
 	});
 	
-},10000);
+},30000);
 
 function getUsers(callback) {
+	if (config.channelId == 'xxx') {
+		console.log(config.channelId)
+		return;
+	}
 	fetch(`${serverURL}?hostId=${config.channelId}`,{
 		method:'GET'
 	}).then(res => res.json())
