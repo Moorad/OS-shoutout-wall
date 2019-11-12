@@ -12,9 +12,10 @@ First
 
 3. Click on Commands and then click on Custom	
 
-4. Click Add Command and put in whatever command you want e.g. !wall.
+4. Click Add Command and put in whatever command you want for example !wall.
 
-5. In the Message box insert whatever message you want then followed by `$(urlfetch https://youtube-shoutout-wall.herokuapp.com/push_user?uid=$(userid))` for example `Your channel will be on the wall shortly $(urlfetch https://youtube-shoutout-wall.herokuapp.com/push_user?uid=$(userid))`
+5. In the Message box insert 
+```$(urlfetch https://youtube-shoutout-wall.herokuapp.com/push_user?uid=$(userid))```
 
 6. You will need Google API key [Follow These Instructions](https://www.slickremix.com/docs/get-api-key-for-youtube/)
 

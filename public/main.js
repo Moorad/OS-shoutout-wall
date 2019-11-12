@@ -20,7 +20,7 @@ setInterval(() => {
 		updateUser();
 	});
 	
-},10000);
+},30000);
 
 function getUsers(callback) {
 	fetch(`${serverURL}?hostId=${config.channelId}`,{
