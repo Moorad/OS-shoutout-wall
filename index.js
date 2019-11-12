@@ -39,7 +39,7 @@ app.get('/push_user', (req, res) => {
 			if (fetchedUsers[i].hostId == hostId) {
 				fetchedUsers[i].users.push(userId);
 				console.log(fetchedUsers[i].hostId+':'+fetchedUsers[i].users);
-				res.send('');
+				res.end();
 				return;
 			}
 		}
@@ -48,7 +48,7 @@ app.get('/push_user', (req, res) => {
 			users: [userId]
 		});
 		console.log(fetchedUsers[i].hostId+':'+fetchedUsers[i].users);
-		res.send('');
+		res.end();
 	})
 });
 
