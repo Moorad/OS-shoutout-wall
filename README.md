@@ -5,7 +5,7 @@ This is a Youtube shoutout wall. This was heavily inspired by https://github.com
 I'm not responsible for any bans or strikes that are caused by using this wall. any practices that are against the [Youtube Community Guidelines](https://support.google.com/youtube/answer/2802032?hl=en-GB) such as sub4sub can result in strikes.
 
 # How to setup
-First 
+
 1. Download and extract this repository
 
 2. Add [Nightbot](https://beta.nightbot.tv/) to your channel if you haven't already.
