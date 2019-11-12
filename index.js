@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const request = require('request');
+const http = require('http');
 const app = express();
 
 let fetchedUsers = [];
@@ -12,6 +13,11 @@ app.listen(process.env.PORT || 4000, () => {
 	console.log('Server is running | port: ' + (process.env.PORT || 4000));
 });
 
+app.get('/', (req,res) => {
+	console.log('ping');
+	res.send('ping');
+	res.end();
+})
 
 app.get('/push_user', (req, res) => {
 	let userId = req.query.uid;
@@ -87,3 +93,8 @@ function getQueryVariable(query, variable) {
 	}
 	console.log('Query variable %s not found', variable);
 }
+
+// Ping the app evert 5 minutes to prevent the app from sleeping
+setInterval(function() {
+    http.get("http://youtube-shoutout-wall.herokuapp.com/");
+}, 300000); 

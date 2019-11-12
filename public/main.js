@@ -1,10 +1,12 @@
 /*global config*/
 let gridContainer = document.getElementsByClassName('grid-container')[0];
-let serverURL = 'http://localhost:4000/get_users';
+let serverURL = 'https://youtube-shoutout-wall.herokuapp.com/get_users'; // use http://localhost:4000/get_users for a local server
 let usersArray = [];
-
+const version = '1.0.1'
 gridContainer.style.gridTemplateColumns = 'auto '.repeat(config.numberOfColumns);
 document.body.style.background = `url(${config.backgroundURL})`;
+
+checkUpdate();
 
 for (var i =0; i < config.numberOfChannels;i++) {
 	gridContainer.innerHTML += ' <div class="grid-item"><img class="profile-picture" src="https://yt3.ggpht.com/a-/AAuE7mB98CJL1Ye38OXbGM8WMR8lJVJRV_kXU1utHA=s240-mo-c-c0xffffffff-rj-k-no" alt=""><div class="wrapper"><div class="channel-name">!wall</div><div class="channel-subscriber-count">0</div></div></div>';
@@ -55,5 +57,13 @@ function updateUser() {
 	}
 }
 
-// https://yt3.ggpht.com/a-/AAuE7mDQ1-4gPIEKqpGr6Uw_ZJFgRQ8gCEi5IknhQEaU=s288-c-k-c0xffffffff-no-rj-mo
-// https://yt3.ggpht.com/a-/AAuE7mC48eLNNt9M65fqy_g44-Ws78zK0LJ6YjL_QhBpnA=s288-c-k-c0xffffffff-no-rj-mo
+function checkUpdate() {
+	fetch('https://raw.githubusercontent.com/Moorad/youtube-shoutout-wall/master/package.json',{
+		method:'GET'
+	}).then(res => res.json()).then(json => {
+		if (json.version != version) {
+			document.getElementById('update-text').innerHTML = "<strong>New Update! "+json.version+"</strong> This application has an update. Download the latest version from <a href='https://github.com/Moorad/youtube-shoutout-wall'>Github</a>"
+			document.getElementById('update').style.display = 'block';
+		}
+	})
+}
