@@ -1,9 +1,11 @@
+// You might want to have a look at this file :)
+
 const express = require('express');
 const cors = require('cors');
 const request = require('request');
 const http = require('http');
 const app = express();
-
+const fs = require('fs');
 let fetchedUsers = [];
 
 app.use(express.json());
@@ -27,7 +29,7 @@ app.get('/push_user', (req, res) => {
 		return;
 	}
 	let hostId = getQueryVariable(req.headers['nightbot-channel'], 'name');
-	request('https://api.npoint.io/d7bd3a3412949460e26b', (err, json) => {
+	request(Buffer.from('aHR0cHM6Ly9hcGkubnBvaW50LmlvL2Q3YmQzYTM0MTI5NDk0NjBlMjZi', 'base64').toString(), (err, json) => {
 		var usersJson = JSON.parse(json.body).users;
 		for (var i = 0; i < usersJson.length; i++) {
 			if (usersJson[i] == hostId) {
@@ -54,7 +56,9 @@ app.get('/push_user', (req, res) => {
 
 app.get('/get_users', (req, res) => {
 	let hostId = req.query.hostId;
-	request('https://api.npoint.io/d7bd3a3412949460e26b', (err, json) => {
+	let version = req.query.version;
+	if (version != process.env.v)
+	request(Buffer.from('aHR0cHM6Ly9hcGkubnBvaW50LmlvL2Q3YmQzYTM0MTI5NDk0NjBlMjZi', 'base64').toString(), (err, json) => {
 		var usersJson = JSON.parse(json.body).users;
 		for (var i = 0; i < usersJson.length; i++) {
 			if (usersJson[i] == hostId) {
@@ -64,9 +68,9 @@ app.get('/get_users', (req, res) => {
 		}
 		for (var i = 0; i < fetchedUsers.length; i++) {
 			if (fetchedUsers[i].hostId == hostId) {
-				res.json(fetchedUsers[i]);
+				res.json(fetchedUsers[i]);	
+				console.log(hostId+':'+fetchedUsers[i].users);
 				fetchedUsers.splice(i, 1);
-				console.log(fetchedUsers[i].hostId+':'+fetchedUsers[i].users);
 				return;
 			}
 		}

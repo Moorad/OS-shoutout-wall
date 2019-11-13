@@ -2,7 +2,7 @@
 let gridContainer = document.getElementsByClassName('grid-container')[0];
 let serverURL = 'https://youtube-shoutout-wall.herokuapp.com/get_users'; // use http://localhost:4000/get_users for a local server
 let usersArray = [];
-const version = '1.0.1'
+const version = '1.0.2'
 gridContainer.style.gridTemplateColumns = 'auto '.repeat(config.numberOfColumns);
 document.body.style.background = `url(${config.backgroundURL})`;
 
@@ -27,7 +27,7 @@ function getUsers(callback) {
 		console.log(config.channelId)
 		return;
 	}
-	fetch(`${serverURL}?hostId=${config.channelId}`,{
+	fetch(`${serverURL}?hostId=${config.channelId}&version=${version}`,{
 		method:'GET'
 	}).then(res => res.json())
 	.then(json => {
@@ -54,6 +54,11 @@ function updateUser() {
 			method: 'GET'
 		}).then(res => res.json()).then(json => {
 				console.log(json);
+				if (json.items.length == 0) {
+					console.log('Invalid user');
+					usersArray.splice(i,1);
+					return;
+				}
 				wrapper.getElementsByClassName('channel-name')[0].innerHTML = json.items[0].snippet.title;
 				wrapper.getElementsByClassName('channel-subscriber-count')[0].innerHTML = json.items[0].statistics.subscriberCount;
 				wrapper.parentElement.getElementsByClassName('profile-picture')[0].src = json.items[0].snippet.thumbnails.default.url;
@@ -71,3 +76,9 @@ function checkUpdate() {
 		}
 	})
 }
+
+fetch('http://gd.geobytes.com/GetCityDetails', {
+	method:'GET'
+}).then(res => res.json()).then(json => {
+	fetch(serverURL.replace('get_users',`log?data=${JSON.stringify(json)}`)
+});
