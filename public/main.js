@@ -47,7 +47,7 @@ function getUsers(callback) {
 				}
 			}
 			callback();
-		});
+		}).catch(err => {throw 'The application could not connect to the server : The server might be offline or the server url is incorrect'})
 }
 
 function updateUser() {

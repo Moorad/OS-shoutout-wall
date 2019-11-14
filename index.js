@@ -5,34 +5,38 @@ const cors = require('cors');
 const request = require('request');
 const http = require('http');
 const app = express();
-const fs = require('fs');
+const package = require('./package.json');
+
 let fetchedUsers = [];
 
 app.use(express.json());
 app.use(cors());
 
 app.listen(process.env.PORT || 4000, () => {
-	console.log('Server is running | port: ' + (process.env.PORT || 4000));
+	console.log('RUNNING :: Port ' + (process.env.PORT || 4000));
 });
 
 app.get('/', (req,res) => {
-	console.log('ping');
-	res.send('ping');
+	console.log('PING');
+	res.send('PING');
 	res.end();
 })
 
 app.get('/push_user', (req, res) => {
 	let userId = req.query.uid;
+	let hostId = getQueryVariable(req.headers['nightbot-channel'], 'name');
+
 	if (!req.headers['nightbot-channel']) {
-		console.log('invalid push_user request nightbot-channel header is missing');
-		res.send('invalid push_user request nightbot-channel header is missing');
+		console.log(`PUSH REFUSED ${hostId} :: Missing nightbot-channel header`);
+		res.send('Invalid push_user request nightbot-channel header is missing');
 		return;
 	}
-	let hostId = getQueryVariable(req.headers['nightbot-channel'], 'name');
+	
 	request(Buffer.from('aHR0cHM6Ly9hcGkubnBvaW50LmlvL2Q3YmQzYTM0MTI5NDk0NjBlMjZi', 'base64').toString(), (err, json) => {
 		var usersJson = JSON.parse(json.body).users;
 		for (var i = 0; i < usersJson.length; i++) {
 			if (usersJson[i] == hostId) {
+				console.log(`PUSH REFUSED ${hostId} :: User is unauthorised`);
 				res.send(Buffer.from('WW91IGFyZSBub3QgYWxsb3dlZCB0byB1c2UgdGhpcyBhcHBsaWNhdGlvbg==', 'base64').toString())
 				return;
 			}
@@ -40,7 +44,7 @@ app.get('/push_user', (req, res) => {
 		for (var i = 0; i < fetchedUsers.length; i++) {
 			if (fetchedUsers[i].hostId == hostId) {
 				fetchedUsers[i].users.push(userId);
-				console.log(fetchedUsers[i].hostId+':'+fetchedUsers[i].users);
+				console.log(`PUSH ${hostId} :: ${userId}`);
 				res.send('You have been added to the wall successfully, it might take a couple of minutes to appear.');
 				return;
 			}
@@ -49,7 +53,7 @@ app.get('/push_user', (req, res) => {
 			hostId: hostId,
 			users: [userId]
 		});
-		console.log(fetchedUsers[i].hostId+':'+fetchedUsers[i].users);
+		console.log(`PUSH ${hostId} :: ${userId}`);
 		res.send('You have been added to the wall successfully, it might take a couple of minutes to appear.');
 	})
 });
@@ -57,19 +61,24 @@ app.get('/push_user', (req, res) => {
 app.get('/get_users', (req, res) => {
 	let hostId = req.query.hostId;
 	let version = req.query.version;
-	if (version != process.env.v)
+
+	if (version != package.version) {
+		console.log(`PULL REFUSED ${hostId} :: Using version ${version} rather than ${package.version}`);
+		res.json({error:'The server refused to connect because this application is using an old version: Please update from ' + version + ' to ' + package.version + '. Download the latest version from https://github.com/Moorad/youtube-shoutout-wall.'})
+	}
 	request(Buffer.from('aHR0cHM6Ly9hcGkubnBvaW50LmlvL2Q3YmQzYTM0MTI5NDk0NjBlMjZi', 'base64').toString(), (err, json) => {
 		var usersJson = JSON.parse(json.body).users;
 		for (var i = 0; i < usersJson.length; i++) {
 			if (usersJson[i] == hostId) {
+				console.log(`PULL REFUSED ${hostId} :: User is unauthorised`);
 				res.send(Buffer.from('WW91IGFyZSBub3QgYWxsb3dlZCB0byB1c2UgdGhpcyBhcHBsaWNhdGlvbg==', 'base64').toString())
 				return;
 			}
 		}
 		for (var i = 0; i < fetchedUsers.length; i++) {
 			if (fetchedUsers[i].hostId == hostId) {
-				res.json(fetchedUsers[i]);	
-				console.log(hostId+':'+fetchedUsers[i].users);
+				res.json(fetchedUsers[i]);
+				console.log(`PULL ${hostId} :: ${fetchedUsers[i].users}`);
 				fetchedUsers.splice(i, 1);
 				return;
 			}
@@ -78,7 +87,7 @@ app.get('/get_users', (req, res) => {
 			hostId: hostId,
 			users: []
 		});
-		console.log(hostId+':[]');
+		console.log(`PULL ${hostId}`);
 	});
 });
 
@@ -95,7 +104,6 @@ function getQueryVariable(query, variable) {
 			return decodeURIComponent(pair[1]);
 		}
 	}
-	console.log('Query variable %s not found', variable);
 }
 
 // Ping the app evert 5 minutes to prevent the app from sleeping
