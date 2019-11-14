@@ -9,5 +9,5 @@ var config = {
 	// you can leave blank for a white background
 
 	'googleAPIKey' : 'AIzaSyClsar_ZmkrZ5Rev-r3JEWnLwF-Fi8VyBo', // Add your Google API key here
-	'channelId' : 'xxx' // Add your channelId here
+	'channelId' : 'UCA8FloqKERn-PgMVGaFJO5w' // Add your channelId here
 };	
