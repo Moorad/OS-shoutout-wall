@@ -15,7 +15,10 @@ I'm not responsible for any bans or strikes that are caused by using this wall. 
 4. Click Add Command and put in whatever command you want for example !wall.
 
 5. In the Message box insert 
-```$(urlfetch https://youtube-shoutout-wall.herokuapp.com/push_user?uid=$(userid))```
+```
+$(urlfetch https://youtube-shoutout-wall.herokuapp.com/push_user?uid=$(userid))
+```
+Note: Do not change anything on the url. Do not replace anything including $(userid).
 
 6. You will need Google API key [Follow These Instructions](https://www.slickremix.com/docs/get-api-key-for-youtube/)
 
