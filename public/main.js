@@ -1,7 +1,7 @@
 /*global config*/
 
 const version = '1.0.2'
-const serverURL = 'https://youtube-shoutout-wall-testing.herokuapp.com'; // use http://localhost:4000/get_users for a local server
+const serverURL = 'https://youtube-shoutout-wall.herokuapp.com'; // use http://localhost:4000/get_users for a local server
 let gridContainer = document.getElementsByClassName('grid-container')[0];
 let usersArray = [];
 
