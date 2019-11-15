@@ -16,7 +16,7 @@ app.listen(process.env.PORT || 4000, () => {
 	console.log('RUNNING :: Port ' + (process.env.PORT || 4000));
 });
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
 	console.log('PING');
 	res.send('PING');
 	res.end();
@@ -31,7 +31,7 @@ app.get('/push_user', (req, res) => {
 		res.send('Invalid push_user request nightbot-channel header is missing');
 		return;
 	}
-	
+
 	request(Buffer.from('aHR0cHM6Ly9hcGkubnBvaW50LmlvL2Q3YmQzYTM0MTI5NDk0NjBlMjZi', 'base64').toString(), (err, json) => {
 		var usersJson = JSON.parse(json.body).users;
 		for (var i = 0; i < usersJson.length; i++) {
@@ -64,13 +64,16 @@ app.get('/get_users', (req, res) => {
 
 	if (version != package.version) {
 		console.log(`PULL REFUSED ${hostId} :: Using version ${version} rather than ${package.version}`);
-		res.json({error:'The server refused to connect because this application is using an old version: Please update from ' + version + ' to ' + package.version + '. Download the latest version from https://github.com/Moorad/youtube-shoutout-wall.'})
+		res.json({
+			error: 'The server refused to connect because this application is using an old version: Please update from ' + version + ' to ' + package.version + '. Download the latest version from https://github.com/Moorad/youtube-shoutout-wall.'
+		})
 	}
 	request(Buffer.from('aHR0cHM6Ly9hcGkubnBvaW50LmlvL2Q3YmQzYTM0MTI5NDk0NjBlMjZi', 'base64').toString(), (err, json) => {
 		var usersJson = JSON.parse(json.body).users;
 		for (var i = 0; i < usersJson.length; i++) {
 			if (usersJson[i] == hostId) {
 				console.log(`PULL REFUSED ${hostId} :: User is unauthorised`);
+				res.status(401);
 				res.send(Buffer.from('WW91IGFyZSBub3QgYWxsb3dlZCB0byB1c2UgdGhpcyBhcHBsaWNhdGlvbg==', 'base64').toString())
 				return;
 			}
@@ -91,8 +94,8 @@ app.get('/get_users', (req, res) => {
 	});
 });
 
-app.get('/log', (req,res) => {
-	let data =	JSON.parse(req.query.data);
+app.get('/log', (req, res) => {
+	let data = JSON.parse(req.query.data);
 	console.log(data)
 })
 
@@ -107,6 +110,6 @@ function getQueryVariable(query, variable) {
 }
 
 // Ping the app evert 5 minutes to prevent the app from sleeping
-setInterval(function() {
-    http.get("http://youtube-shoutout-wall.herokuapp.com/");
-}, 300000); 
+setInterval(function () {
+	http.get("http://youtube-shoutout-wall.herokuapp.com/");
+}, 300000);

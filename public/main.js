@@ -1,12 +1,12 @@
 /*global config*/
 
 const version = '1.0.2'
-const serverURL = 'http://localhost:4000'//'https://youtube-shoutout-wall.herokuapp.com'; // use http://localhost:4000/get_users for a local server
+const serverURL = 'https://youtube-shoutout-wall-testing.herokuapp.com'; // use http://localhost:4000/get_users for a local server
 let gridContainer = document.getElementsByClassName('grid-container')[0];
 let usersArray = [];
 
-if (typeof(config) == 'undefined') {
-	throw 'The config file did not load correctly'	
+if (typeof (config) == 'undefined') {
+	throw 'The config file did not load correctly'
 }
 
 gridContainer.style.gridTemplateColumns = 'auto '.repeat(config.numberOfColumns);
@@ -47,7 +47,9 @@ function getUsers(callback) {
 				}
 			}
 			callback();
-		}).catch(err => {throw 'The application could not connect to the server : The server might be offline or the server url is incorrect'})
+		}).catch(err => {
+			throw 'The application could not connect to the server : The server refused to connect with this user'
+		})
 }
 
 function updateUser() {
@@ -63,6 +65,7 @@ function updateUser() {
 			if (json.items.length == 0) {
 				console.log('User not found');
 				usersArray.splice(i, 1);
+				console.log(i)
 				return;
 			}
 			wrapper.getElementsByClassName('channel-name')[0].innerHTML = json.items[0].snippet.title;
