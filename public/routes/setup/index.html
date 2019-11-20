@@ -13,34 +13,16 @@
 <body>
 	<nav class='nav'>
 		<img src="/images/logo.png" alt="">
-		<button class='nav-button active' style='margin-left:55px'>Home</button>
-		<a href="/setup"><button class='nav-button wizard'>Setup Wizard</button></a>
-		<a href="https://github.com/Moorad/OS-shoutout-wall"><button class='nav-button left'>GitHub</button></a>
+		<button class='nav-button ' style='margin-left:55px'>Home</button>
+	
 	</nav>
 	<div class='main-container'>
-		<img src="./images/illustration.svg" alt="">
-		<div class='main-container-text'>An OS <div class='red'>Youtube</div>
-			<div class='main-container-subtext'>Shoutout Wall</div>
-			<a href="https://github.com/Moorad/OS-shoutout-wall"><button class='main-button github'><i class="fab fa-github fa-lg"></i> GitHub Repository</button></a>
-			<a href="/setup"><button class='main-button wizard'><i class="fas fa-bolt"></i> Setup Wizard</button></a>
-		</div>
+		<div class='title'>Credentials</div>
+		<div class='input-section'><p>Enter your Channel ID</p><input type="text"></div>
+		<div class='input-section'><p>Enter your Google API Key</p><input type="text"></div>
 	</div>
-		
-	<div class='section'>
-			<!-- <i class="fas fa-angle-down center fa-2x"></i> -->
-			
-			<div style="text-align: center;color:rgba(0,0,0,0.2);font-weight:700;">The full website is coming soon... Current update: Alpha 1.1.0</div> 
-			<div>
-				what is different?
-				<br>
-				<ul>
-					<li>The wall is website base!</li>
-					<li>No more config junk. You can use the new user friendly setup wizard wit even more customizablilty</li>
-					<li>New theme</li>
-					<li>Less bugs. The app has been tested</li>
-				</ul>
-			</div>
-		</div>
+	</div>
+	<div class='next-button inactive'><i class="fas fa-arrow-circle-right fa-4x"></i></div>
 	<style>
 		:root {
 			--body-bg-colour: #181d28;
@@ -99,20 +81,26 @@
 
 		.main-container {
 			position: absolute;
-			width: 100vw;
-			height: 100vh;
+			width: 100%;
 			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			margin-top: 5rem;
+			text-align: center;
+			color: white;
 		}
 
-		.main-container img {
-			position: absolute;
-			right: 5%;
-			top: 25vh;
-			height: 50%;
+		input {
+			border:2px solid var(--primary-colour);
+			background: none;
+			color: white;
+			padding:0.5rem;
+			width: 17rem;
 		}
 
-		.main-container {
-
+		.input-section {
+			margin:3rem;
 		}
 
 		.main-container-text {
@@ -172,9 +160,20 @@
 			padding:2rem;
 		}
 
-		.center {
-			margin-left: 50%;
-			color:white;
+		.title {
+			font-size: 50px;
+			font-weight: 700;
+		}
+
+		.next-button {
+			position: absolute;
+			right:1rem;
+			bottom: 1rem;
+			color: var(--primary-colour);
+		}
+
+		.inactive {
+			color: rgba(255,255,255,0.2);
 		}
 	</style>
 
