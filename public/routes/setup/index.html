@@ -18,11 +18,11 @@
 	</nav>
 	<div class='main-container'>
 		<div class='title'>Credentials</div>
-		<div class='input-section'><p>Enter your Channel ID</p><input type="text"></div>
+		<div class='input-section' id='channelId'><p>Enter your Channel ID</p><input type="text"></div>
 		<div class='input-section'><p>Enter your Google API Key</p><input type="text"></div>
 	</div>
 	</div>
-	<div class='next-button inactive'><i class="fas fa-arrow-circle-right fa-4x"></i></div>
+	<div class='next-button inactive' id='next'><i class="fas fa-arrow-circle-right fa-4x"></i></div>
 	<style>
 		:root {
 			--body-bg-colour: #181d28;
@@ -58,7 +58,7 @@
 
 		.nav-button {
 			margin-left: 15px;
-			background-color: #ffffff00;
+			background-color: #ffffff00;	
 			border: 0;
 			height: 100%;
 			padding: 2px 1rem;
@@ -177,6 +177,21 @@
 		}
 	</style>
 
+	<script>
+		var channelId = document.getElementById('channelId');
+		var next = document.getElementById('next');
+		
+		next.addEventListener('click', checkKeys)
+		function checkKeys() {
+			fetch(`https://www.googleapis.com/youtube/v3/channels?id=${config.channelId}&key=${config.googleAPIKey}&part=id`, {
+				method: 'GET'
+			}).then(res => res.json()).then(json => {
+				if (json.items.length == 0) {
+					throw 'The channel id is invalid';
+				}
+			})
+		}	
+	</script>
 </body>
 
 </html>
