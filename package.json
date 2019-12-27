@@ -1,7 +1,7 @@
 {
   "name": "shoutoutwall",
   "version": "1.0.2",
-  "description": "",
+  "description": "This is an open source youtube shoutout wall, this project is no longer maintained by me but I would be more than happy to accept any pull requests or open issues for other people to complete",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

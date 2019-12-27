@@ -1,5 +1,5 @@
 // You might want to have a look at this file :)
-
+// This project is no longer maintained
 const express = require('express');
 const cors = require('cors');
 const request = require('request');
